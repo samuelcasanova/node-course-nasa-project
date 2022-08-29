@@ -1,7 +1,6 @@
 async function httpGetPlanets() {
   const response = await fetch('http://localhost:8000/planets')
-  const planets = await response.json()
-  return planets
+  return await response.json()
 }
 
 async function httpGetLaunches() {
