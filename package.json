@@ -19,5 +19,6 @@
   "bugs": {
     "url": "https://github.com/samuelcasanova/node-course-nasa-project/issues"
   },
-  "homepage": "https://github.com/samuelcasanova/node-course-nasa-project#readme"
+  "homepage": "https://github.com/samuelcasanova/node-course-nasa-project#readme",
+  "dependencies": {}
 }

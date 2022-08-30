@@ -1,19 +1,25 @@
 const express = require('express')
-const planetsRouter = require('./routes/planets/planets.router')
 const path = require('path')
+const morgan = require('morgan')
+
+const planetsRouter = require('./routes/planets/planets.router')
+const launchesRouter = require('./routes/launches/launches.router')
 
 const app = express()
 
-app.use(express.static(path.join(__dirname, '..', 'public')))
-app.get('/', (req, res) => {res.sendFile(path.join(__dirname, '..', 'public', 'index.html'))})
-
 app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000")
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-    next();
-  });
-
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000")
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+  next();
+})
+app.use(morgan('combined'))
 app.use(express.json())
+app.use(express.static(path.join(__dirname, '..', 'public')))
+
 app.use(planetsRouter)
+app.use(launchesRouter)
+
+app.get('/*', (req, res) => {res.sendFile(path.join(__dirname, '..', 'public', 'index.html'))})
+
 
 module.exports = app
