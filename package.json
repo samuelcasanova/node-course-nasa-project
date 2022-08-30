@@ -1,0 +1,23 @@
+{
+  "name": "nasa-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "npm run watch --prefix server & npm start --prefix client",
+    "build": "npm run build --prefix client",
+    "prod": "npm start --prefix server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samuelcasanova/node-course-nasa-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samuelcasanova/node-course-nasa-project/issues"
+  },
+  "homepage": "https://github.com/samuelcasanova/node-course-nasa-project#readme"
+}

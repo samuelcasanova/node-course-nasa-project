@@ -10,20 +10,11 @@ const parser = parse({
 })
 
 function isHabitablePlanet(planet) {
-    return planet['koi_disposition'] === 'CONFIRMED' && planet['koi_insol'] > 0.36 && planet['koi_insol'] < 1.11 && planet['koi_prad'] < 1.16
+    return planet['koi_disposition'] === 'CONFIRMED' 
+        && planet['koi_insol'] > 0.36 
+        && planet['koi_insol'] < 1.11 
+        && planet['koi_prad'] < 1.6
 }
-
-createReadStream('./data/kepler_data.csv')
-    .pipe(parser)
-    .on('data', (data) => {
-        processPlanet(data)
-    })
-    .on('error', (error) => {
-      console.error(error)  
-    })
-    .on('end', () => {
-        console.info(`Finished! Found ${planets.length}`)
-    })
 
 function processPlanet(planet) {
     if (isHabitablePlanet(planet)) {
