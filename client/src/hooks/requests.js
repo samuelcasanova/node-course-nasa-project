@@ -18,15 +18,26 @@ async function httpGetLaunches() {
 // Submit given launch data to launch system.
 async function httpSubmitLaunch(launch) {
   console.info('Submitting a new launch:', launch)
-  const response = await fetch('http://localhost:8000/launches', { method: 'POST', body: JSON.stringify(launch)})
+  const response = await fetch('http://localhost:8000/launches', { 
+    method: 'POST', 
+    body: JSON.stringify(launch), 
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
   const addedLaunch = await response.json()
   console.info('Added launch:', addedLaunch)
-  return addedLaunch
+  return response.ok
 }
 
 async function httpAbortLaunch(id) {
-  // TODO: Once API is ready.
-  // Delete launch with given ID.
+  console.info('Aborting launch...', id)
+  const response = await fetch(`http://localhost:8000/launches/${id}`, { 
+    method: 'DELETE'
+  })
+  const abortedLaunch = await response.json()
+  console.info('Aborted launch:', abortedLaunch)
+  return response.ok
 }
 
 export {
