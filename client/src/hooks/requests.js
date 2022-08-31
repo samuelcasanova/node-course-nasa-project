@@ -1,17 +1,27 @@
 async function httpGetPlanets() {
+  console.info('Fetching planets...')
   const response = await fetch('http://localhost:8000/planets')
-  return await response.json()
+  const planets = await response.json()
+  console.info('Fetched planets:', planets)
+  return planets
 }
 
 // Load launches, sort by flight number, and return as JSON.
 async function httpGetLaunches() {
+  console.info('Fetching launches...')
   const response = await fetch('http://localhost:8000/launches')
-  return await response.json()
+  const launches = await response.json()
+  console.info('Fetched launches:', launches)
+  return launches
 }
 
+// Submit given launch data to launch system.
 async function httpSubmitLaunch(launch) {
-  // TODO: Once API is ready.
-  // Submit given launch data to launch system.
+  console.info('Submitting a new launch:', launch)
+  const response = await fetch('http://localhost:8000/launches', { method: 'POST', body: JSON.stringify(launch)})
+  const addedLaunch = await response.json()
+  console.info('Added launch:', addedLaunch)
+  return addedLaunch
 }
 
 async function httpAbortLaunch(id) {

@@ -38,13 +38,17 @@ function loadPlanetsData() {
                 reject(error)
             })
             .on('end', () => {
-                console.info(`Finished! Found ${planets.length}`)
+                console.info(`Finished processing planets CSV stream! Pre-fetched ${planets.length} habitable planets.`)
                 resolve(planets)
             })
     })
 }
 
+function getPlanets() {
+    return planets
+}
+
 module.exports = {
     loadPlanetsData,
-    planets
+    getPlanets
 }
