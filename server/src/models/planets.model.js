@@ -1,8 +1,7 @@
 const { parse } = require('csv-parse')
 const { createReadStream } = require('fs')
 const path = require('path')
-
-const planets = []
+const planets = require('./planets.mongo')
 
 const parser = parse({
     comment: '#',
@@ -16,9 +15,15 @@ function isHabitablePlanet(planet) {
         && planet['koi_prad'] < 1.6
 }
 
-function processPlanet(planet) {
+async function processPlanet(planet) {
     if (isHabitablePlanet(planet)) {
-        planets.push(planet)
+        await planets.updateOne({
+            keplerName: planet.kepler_name
+        }, {
+            keplerName: planet.kepler_name
+        }, {
+            upsert: true
+        })
     }
 }
 
@@ -37,15 +42,19 @@ function loadPlanetsData() {
                 console.error(error)  
                 reject(error)
             })
-            .on('end', () => {
-                console.info(`Finished processing planets CSV stream! Pre-fetched ${planets.length} habitable planets.`)
+            .on('end', async () => {
+                const planetsLength = (await planets.find({})).length
+                console.info(`Finished processing planets CSV stream! Pre-fetched ${planetsLength} habitable planets.`)
                 resolve(planets)
             })
     })
 }
 
-function getPlanets() {
-    return planets
+async function getPlanets() {
+    return await planets.find({}, {
+        _id: 0,
+        __v: 0
+    })
 }
 
 module.exports = {

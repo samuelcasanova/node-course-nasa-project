@@ -1,10 +1,10 @@
-const { getLaunches, addLaunch, abortLaunch } = require('../../models/launches.model')
+const { getLaunches, saveLaunch, abortLaunch } = require('../../models/launches.model')
 
-function httpGetLaunches(request, response) {
-    return response.status(200).json(getLaunches())
+async function httpGetLaunches(request, response) {
+    return response.status(200).json(await getLaunches())
 }
 
-function httpAddLaunch(req, res) {
+async function httpAddLaunch(req, res) {
     const launchData = req.body
     const launchDate = new Date(launchData.launchDate)
     if (isNaN(launchDate) || !launchData.mission || !launchData.target || !launchData.rocket) {
@@ -19,14 +19,14 @@ function httpAddLaunch(req, res) {
         upcoming: true,
         success: true
     })
-    addLaunch(addedLaunch)
+    await saveLaunch(addedLaunch)
     return res.status(201).json(addedLaunch)
 }
 
-function httpAbortLaunch(req, res) {
+async function httpAbortLaunch(req, res) {
     const flightNumber = Number(req.params.flightNumber)
     try {
-        const abortedLaunch = abortLaunch(flightNumber)
+        const abortedLaunch = await abortLaunch(flightNumber)
         return res.status(200).json(abortedLaunch)
     } catch (err) {
         console.error(err)

@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "watch": "npm run watch --prefix server & npm start --prefix client",
+    "watch-server": "npm run watch --prefix server",
     "build": "npm run build --prefix client && rsync -r ./client/build/* ./server/public",
     "prod": "npm start --prefix server",
     "test": "jest --watch --detectOpenHandles"
@@ -23,5 +24,9 @@
   "devDependencies": {
     "jest": "^29.0.1",
     "supertest": "^6.2.4"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "mongoose": "^6.5.4"
   }
 }
