@@ -17,5 +17,5 @@ jobs:
           node-version: '16'
       - run: npm install --prefix client
       - run: npm run build --prefix client
-      - run: npm install
-      - run: npm test
+      - run: npm install --prefix server
+      - run: npm test --prefix server
