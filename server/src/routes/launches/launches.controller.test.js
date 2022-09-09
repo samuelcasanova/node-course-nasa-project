@@ -3,7 +3,7 @@ const app = require('../../app')
 const { getLaunches, saveLaunch, abortLaunch, loadLaunchesData } = require('../../models/launches.model')
 const { loadPlanetsData } = require('../../models/planets.model')
 const { mongoConnect, mongoDisconnect } = require('../../services/mongo')
-console.log(require('dotenv').config())
+require('dotenv').config()
 
 describe('TESTS', () => {
     beforeAll(async () => {
