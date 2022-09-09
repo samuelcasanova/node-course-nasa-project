@@ -95,26 +95,28 @@ async function getLaunches() {
 }
 
 async function saveLaunch(launch) {
+    const launchToBeSaved = {
+        ...launch,
+        success: launch.success === null ? true : launch.success,
+        upcoming: launch.upcoming === null ? true : launch.upcoming
+    }
+    if(!launch.flightNumber) {
+        launchToBeSaved.flightNumber = await getLastFlightNumber() + 1
+    }
+    await launches.updateOne({
+        flightNumber: launchToBeSaved.flightNumber
+    }, launchToBeSaved, { upsert: true })
+}
+
+async function scheduleNewLaunch(launch) {
     const planet = await planets.findOne({
         keplerName: launch.target
     })
     if (!planet){
         throw new Error('No matching planet found')
     }
-    
-    if(!launch.flightNumber) {
-        launch.flightNumber = await getLastFlightNumber() + 1
-    }
 
-    const launchToBeSaved = {
-        ...launch,
-        success: launch.success === null ? true : launch.success,
-        upcoming: launch.upcoming === null ? true : launch.upcoming
-    }
-
-    await launches.updateOne({
-        flightNumber: launchToBeSaved.flightNumber
-    }, launchToBeSaved, { upsert: true })
+    await saveLaunch(launchToBeSaved)
 }
 
 async function abortLaunch(flightNumber) {
@@ -148,5 +150,6 @@ module.exports = {
     parseLaunchDoc,
     getLaunches,
     saveLaunch,
+    scheduleNewLaunch,
     abortLaunch
 }

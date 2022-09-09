@@ -1,4 +1,4 @@
-const { getLaunches, saveLaunch, abortLaunch } = require('../../models/launches.model')
+const { getLaunches, abortLaunch, scheduleNewLaunch } = require('../../models/launches.model')
 
 async function httpGetLaunches(request, response) {
     return response.status(200).json(await getLaunches())
@@ -19,7 +19,7 @@ async function httpAddLaunch(req, res) {
         upcoming: true,
         success: true
     })
-    await saveLaunch(addedLaunch)
+    await scheduleNewLaunch(addedLaunch)
     return res.status(201).json(addedLaunch)
 }
 
