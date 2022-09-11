@@ -6,7 +6,9 @@
   "scripts": {
     "watch": "npm run watch --prefix server & npm start --prefix client",
     "watch-server": "npm run watch --prefix server",
-    "build": "npm run build --prefix client && rsync -r ./client/build/* ./server/public",
+    "build": "npm run build --prefix client && mkdir -p ./server/public && cp -fr ./client/build/* ./server/public",
+    "install-client": "npm install --prefix client",
+    "install-server": "npm install --prefix server",
     "prod": "npm start --prefix server",
     "test": "npm test --prefix server"
   },
